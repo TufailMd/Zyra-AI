@@ -1,0 +1,4 @@
+# Local environment files. Keep the checked-in template available.
+.env
+.env.*
+!.env.example

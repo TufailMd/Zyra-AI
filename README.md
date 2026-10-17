@@ -159,7 +159,21 @@ npm run build
 npm run preview
 ```
 
-The backend has no production-specific npm script or build step. From `backend\`, it can be started with `node index.js` after installing dependencies and configuring the environment.
+The backend has no build step. Use `npm run dev` for local development or `npm start` for production; both run `index.js`.
+
+## Render Backend Deployment
+
+Configure the Render web service to use `backend` as its root directory, `npm ci` as its build command, and `npm start` as its start command. The backend connects to MongoDB before opening its HTTP listener and exits with an error if the database connection cannot be established.
+
+Set these backend service environment variables in Render:
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `MONGODB_URL` | Yes | MongoDB connection URI used by Mongoose. |
+| `JWT_SECRET` | Yes | Secret used to sign and verify authentication cookies. |
+| `PORT` | No | Render supplies this automatically; the backend also defaults to `5000` for local use. |
+
+In MongoDB Atlas, ensure the database user and password in `MONGODB_URL` are valid and URL-encode any special characters in the username or password. Add the Render service's outbound IP addresses to Atlas **Network Access**. If Render's outbound addresses can change for your service, use a supported stable-egress option or update the Atlas access list; only use a broad `0.0.0.0/0` rule if its security implications are acceptable.
 
 ## API
 

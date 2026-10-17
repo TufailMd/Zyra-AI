@@ -1,6 +1,15 @@
 import genToken from "../config/token.js"
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs"
+import mongoose from "mongoose"
+
+const logAuthFailure = (operation, error) => {
+    console.error(`Authentication ${operation} failed`, {
+        error: error instanceof Error ? error.name : "UnknownError",
+        mongooseReadyState: mongoose.connection.readyState
+    })
+}
+
 export const signUp=async (req,res)=>{
 try {
     const {name,email,password}=req.body
@@ -31,7 +40,8 @@ try {
     return res.status(201).json(user)
 
 } catch (error) {
-       return res.status(500).json({message:`sign up error ${error}`})
+       logAuthFailure("signup", error)
+       return res.status(500).json({message:"sign up failed"})
 }
 }
 
@@ -61,7 +71,8 @@ try {
     return res.status(200).json(user)
 
 } catch (error) {
-       return res.status(500).json({message:`login error ${error}`})
+       logAuthFailure("signin", error)
+       return res.status(500).json({message:"login failed"})
 }
 }
 

@@ -3,3 +3,4 @@ node_modules/
 init/
 init
 updateListings
+seed.js

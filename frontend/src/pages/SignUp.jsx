@@ -129,11 +129,12 @@ function SignUp() {
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full h-full rounded-full outline-none bg-transparent placeholder-gray-300 px-5 pr-14"
-            required
-            minLength={6}
+            className="w-full h-full outline-none bg-transparent text-white placeholder-gray-300 px-5 pr-14 rounded-full"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={6}
+            autoComplete="new-password"
           />
 
           <button

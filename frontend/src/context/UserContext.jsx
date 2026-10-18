@@ -12,13 +12,23 @@ function UserContext({ children }) {
 
   const handleCurrentUser = async () => {
     try {
-      const result = await axios.get(`${serverUrl}/api/user/current`, { withCredentials: true })
-      setUserData(result.data.user)
-      // console.log(result.data.user)
+      const result = await axios.get(
+        `${serverUrl}/api/user/current`,
+        { withCredentials: true }
+      );
+
+      setUserData(result.data.user);
     } catch (error) {
-      console.log(error)
+      setUserData(null);
+
+      if (error.response?.status !== 401) {
+        console.error(
+          "Current user error:",
+          error.response?.data || error.message
+        );
+      }
     }
-  }
+  };
 
   const getGeminiResponse = async (command) => {
     try {

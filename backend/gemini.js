@@ -1,10 +1,10 @@
-import axios from "axios"
+import axios from "axios";
 
 const geminiResponse = async (command, assistantName, userName) => {
   try {
-    const apiUrl = process.env.GEMINI_API_URL
-    const apiKey = process.env.GEMINI_API_KEY
-    const model = process.env.GEMINI_MODEL
+    const apiUrl = process.env.GEMINI_API_URL;
+    const apiKey = process.env.GEMINI_API_KEY;
+    const model = process.env.GEMINI_MODEL;
 
     const prompt = `You are a virtual assistant named ${assistantName} created by ${userName}. 
 You are not Google. You will now behave like a voice-enabled assistant.
@@ -44,7 +44,7 @@ Important:
 
 
 now your userInput- ${command}
-`
+`;
 
     const result = await axios.post(
       apiUrl,
@@ -58,25 +58,25 @@ now your userInput- ${command}
           "Content-Type": "application/json",
           "Api-Revision": "2026-05-20",
         },
-      }
-    )
+      },
+    );
 
-    const data = result.data
+    const data = result.data;
 
     // naya format: steps -> model_output -> content -> text
-    const step = data?.steps?.find((s) => s.type === "model_output")
+    const step = data?.steps?.find((s) => s.type === "model_output");
     const textFromSteps = step?.content
       ?.filter((c) => c.type === "text")
       .map((c) => c.text)
-      .join("")
+      .join("");
 
     // fallback: purana outputs format
-    const textFromOutputs = data?.outputs?.[data.outputs.length - 1]?.text
+    const textFromOutputs = data?.outputs?.[data.outputs.length - 1]?.text;
 
-    return textFromSteps || textFromOutputs || ""
+    return textFromSteps || textFromOutputs || "";
   } catch (error) {
-    console.log(error.response?.data || error.message)
+    console.log(error.response?.data || error.message);
   }
-}
+};
 
-export default geminiResponse
+export default geminiResponse;

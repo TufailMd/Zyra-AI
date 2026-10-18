@@ -79,6 +79,8 @@ function SignIn() {
       );
 
       setUserData(result.data.user);
+      setEmail("");
+      setPassword("");
       navigate("/");
     } catch (error) {
       console.error("Signin failed:", error);

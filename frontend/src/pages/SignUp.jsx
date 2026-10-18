@@ -78,6 +78,10 @@ function SignUp() {
         { withCredentials: true }
       );
 
+      setName("");
+      setEmail("");
+      setPassword("");
+
       setUserData(result.data.user);
       navigate("/customize");
     } catch (error) {
